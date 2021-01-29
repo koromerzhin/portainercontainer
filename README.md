@@ -1,20 +1,20 @@
-# Welcome to @koromerzhin/template-github 👋
+# Welcome to @koromerzhin/portainercontainer 👋
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
 
 ![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)
 
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/koromerzhin/template-github/graphs/commit-activity)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/koromerzhin/portainercontainer/graphs/commit-activity)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-![Continuous Integration](https://github.com/koromerzhin/template-github/workflows/Continuous%20Integration/badge.svg?branch=develop)
+![Continuous Integration](https://github.com/koromerzhin/portainercontainer/workflows/Continuous%20Integration/badge.svg?branch=develop)
 
-> Template de nouveau repository
+> Gestion de docker avec portainer
 
-## 🏠 [Homepage](https://github.com/koromerzhin/template-github#readme)
+## 🏠 [Homepage](https://github.com/koromerzhin/portainercontainer#readme)
 
 ## Need
 
@@ -32,13 +32,13 @@ make install
 ## after git add
 
 ```sh
-make git-check
+make git check
 ```
 
 ## Replace git commit
 
 ```sh
-make git-commit
+make git commit
 ```
 
 ## Help
@@ -59,9 +59,9 @@ make help
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!
-Feel free to check [issues page](https://github.com/koromerzhin/template-github/issues).
+Feel free to check [issues page](https://github.com/koromerzhin/portainercontainer/issues).
 You can also take a look at the [contributing guide](
-    https://github.com/koromerzhin/template-github/blob/develop/CONTRIBUTING.md
+    https://github.com/koromerzhin/portainercontainer/blob/develop/CONTRIBUTING.md
     ).
 
 ## Show your support
@@ -73,7 +73,7 @@ Give a ⭐️ if this project helped you!
 Copyright © 2019 [koromerzhin](https://github.com/koromerzhin).
 
 This project is [MIT](
-    https://github.com/koromerzhin/template-github/blob/develop/LICENSE
+    https://github.com/koromerzhin/portainercontainer/blob/develop/LICENSE
     ) licensed.
 
 ## ✨ Contributors

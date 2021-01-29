@@ -1,7 +1,7 @@
 {
-  "name": "@koromerzhin/template-github",
+  "name": "@koromerzhin/portainercontainer",
   "version": "1.0.0",
-  "description": "Template de nouveau repository",
+  "description": "Gestion de docker avec portainer",
   "scripts": {
     "linter-markdown": "markdownlint",
     "contributors": "all-contributors",
@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/koromerzhin/template-github.git"
+    "url": "git+https://github.com/koromerzhin/portainercontainer.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/koromerzhin/template-github/issues"
+    "url": "https://github.com/koromerzhin/portainercontainer/issues"
   },
-  "homepage": "https://github.com/koromerzhin/template-github#readme",
+  "homepage": "https://github.com/koromerzhin/portainercontainer#readme",
   "devDependencies": {
     "all-contributors-cli": "6.19.0",
     "gitmoji-changelog": "2.2.0",
