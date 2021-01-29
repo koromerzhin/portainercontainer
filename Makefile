@@ -1,6 +1,11 @@
 .DEFAULT_GOAL := help
+STACK         := portainer
+NETWORK       := proxynetwork
 
-SUPPORTED_COMMANDS := contributors git linter
+PORTAINER         := $(STACK)_portainer
+PORTAINERFULLNAME := $(PORTAINER).1.$$(docker service ps -f 'name=$(PORTAINER)' $(PORTAINER) -q --no-trunc | head -n1)
+
+SUPPORTED_COMMANDS := contributors git linter docker ssh logs
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
 ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
@@ -30,6 +35,40 @@ else ifeq ($(COMMAND_ARGS),generate)
 	@npm run contributors generate
 else
 	@npm run contributors
+endif
+
+docker: ## Scripts docker
+ifeq ($(COMMAND_ARGS),create-network)
+	@docker network create --driver=overlay $(NETWORK)
+else ifeq ($(COMMAND_ARGS),deploy)
+	@docker stack deploy -c docker-compose.yml $(STACK)
+else ifeq ($(COMMAND_ARGS),image-pull)
+	@docker image pull portainer/portainer-ce:2.0.1
+else ifeq ($(COMMAND_ARGS),ls)
+	@docker stack services $(STACK)
+else ifeq ($(COMMAND_ARGS),stop)
+	@docker stack rm $(STACK)
+else
+	@echo "ARGUMENT missing"
+	@echo "---"
+	@echo "make docker ARGUMENT"
+	@echo "---"
+	@echo "create-network: create network"
+	@echo "deploy: deploy"
+	@echo "image-pull: Get docker image"
+	@echo "ls: docker service"
+	@echo "stop: docker stop"
+endif
+
+ssh: ## SSH
+ifeq ($(COMMAND_ARGS),portainer)
+	@docker exec -it $(PORTAINERFULLNAME) /bin/bash
+else
+	@echo "ARGUMENT missing"
+	@echo "---"
+	@echo "make ssh ARGUMENT"
+	@echo "---"
+	@echo "portainer: PORTAINER"
 endif
 
 git: ## Scripts GIT
@@ -64,3 +103,23 @@ else
 	@echo "all: ## Launch all linter"
 	@echo "readme: linter README.md"
 endif
+
+logs: ## Scripts logs
+ifeq ($(COMMAND_ARGS),stack)
+	@docker service logs -f --tail 100 --raw $(STACK)
+else ifeq ($(COMMAND_ARGS),portainer)
+	@docker service logs -f --tail 100 --raw $(PORTAINERFULLNAME)
+else
+	@echo "ARGUMENT missing"
+	@echo "---"
+	@echo "make logs ARGUMENT"
+	@echo "---"
+	@echo "stack: logs stack"
+	@echo "portainer: PORTAINER"
+endif
+
+inspect: ## docker service inspect
+	@docker service inspect $(PORTAINER)
+
+update: ## docker service update
+	@docker service update $(PORTAINER)
