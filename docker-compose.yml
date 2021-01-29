@@ -16,6 +16,8 @@ services:
     networks:
       - net
       - proxynetwork
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     deploy:
       labels:
         - "traefik.enable=true"
