@@ -25,6 +25,8 @@ node_modules: package-lock.json
 	@npm install
 
 install: node_modules ## Installation application
+	@make docker image-pull
+	@make docker deploy
 
 contributors: ## Contributors
 ifeq ($(COMMAND_ARGS),add)
