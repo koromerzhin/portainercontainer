@@ -1,3 +1,5 @@
+isDocker := $(shell docker info > /dev/null 2>&1 && echo 1)
+
 .DEFAULT_GOAL := help
 STACK         := portainer
 NETWORK       := proxynetwork
@@ -12,9 +14,7 @@ ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   $(eval $(COMMAND_ARGS):;@:)
 endif
 
-%:
-	@:
-
+.PHONY: help
 help:
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
@@ -24,11 +24,19 @@ package-lock.json: package.json
 node_modules: package-lock.json
 	@npm install
 
+isdocker: ## Docker is launch
+ifeq ($(isDocker), 0)
+	@echo "Docker is not launch"
+	exit 1
+endif
+
+.PHONY: install
 install: node_modules ## Installation application
 	@make docker image-pull
 	@make docker deploy
 
-contributors: ## Contributors
+.PHONY: contributors
+contributors: node_modules ## Contributors
 ifeq ($(COMMAND_ARGS),add)
 	@npm run contributors add
 else ifeq ($(COMMAND_ARGS),check)
@@ -39,7 +47,8 @@ else
 	@npm run contributors
 endif
 
-docker: ## Scripts docker
+.PHONY: docker
+docker: isdocker ## Scripts docker
 ifeq ($(COMMAND_ARGS),create-network)
 	@docker network create --driver=overlay $(NETWORK)
 else ifeq ($(COMMAND_ARGS),deploy)
@@ -62,7 +71,8 @@ else
 	@echo "stop: docker stop"
 endif
 
-ssh: ## SSH
+.PHONY: ssh
+ssh: isdocker ## SSH
 ifeq ($(COMMAND_ARGS),portainer)
 	@docker exec -it $(PORTAINERFULLNAME) /bin/bash
 else
@@ -73,7 +83,8 @@ else
 	@echo "portainer: PORTAINER"
 endif
 
-git: ## Scripts GIT
+.PHONY: git
+git: node_modules ## Scripts GIT
 ifeq ($(COMMAND_ARGS),commit)
 	@npm run commit
 else ifeq ($(COMMAND_ARGS),status)
@@ -92,7 +103,8 @@ else
 	@echo "status: status"
 endif
 
-linter: ## Scripts Linter
+.PHONY: linter
+linter: node_modules ## Scripts Linter
 ifeq ($(COMMAND_ARGS),all)
 	@make linter readme -i
 else ifeq ($(COMMAND_ARGS),readme)
@@ -106,7 +118,8 @@ else
 	@echo "readme: linter README.md"
 endif
 
-logs: ## Scripts logs
+.PHONY: logs
+logs: isdocker ## Scripts logs
 ifeq ($(COMMAND_ARGS),stack)
 	@docker service logs -f --tail 100 --raw $(STACK)
 else ifeq ($(COMMAND_ARGS),portainer)
@@ -120,8 +133,10 @@ else
 	@echo "portainer: PORTAINER"
 endif
 
-inspect: ## docker service inspect
+.PHONY: inspect
+inspect: isdocker ## docker service inspect
 	@docker service inspect $(PORTAINER)
 
-update: ## docker service update
+.PHONY: update
+update: isdocker ## docker service update
 	@docker service update $(PORTAINER)
