@@ -31,7 +31,7 @@ docker swarm
 
 Hosts:
 
-- 127.0.0.1 portainer.lxc
+- portainer.traefik.me
 
 ## Install
 
