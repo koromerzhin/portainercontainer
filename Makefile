@@ -33,8 +33,8 @@ endif
 
 .PHONY: install
 install: node_modules ## Installation application
-	@make docker image-pull
-	@make docker deploy
+	@make docker image-pull -i
+	@make docker deploy -i
 
 .PHONY: contributors
 contributors: node_modules ## Contributors
