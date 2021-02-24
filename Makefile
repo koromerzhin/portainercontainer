@@ -7,7 +7,7 @@ NETWORK       := proxynetwork
 PORTAINER         := $(STACK)_portainer
 PORTAINERFULLNAME := $(PORTAINER).1.$$(docker service ps -f 'name=$(PORTAINER)' $(PORTAINER) -q --no-trunc | head -n1)
 
-SUPPORTED_COMMANDS := contributors git linter docker ssh logs
+SUPPORTED_COMMANDS := contributors git linter docker ssh logs sleep
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
 ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
@@ -30,6 +30,10 @@ ifeq ($(isDocker), 0)
 	@echo "Docker is not launch"
 	exit 1
 endif
+
+.PHONY: sleep
+sleep: ## sleep
+	@sleep  $(COMMAND_ARGS)
 
 .PHONY: install
 install: node_modules ## Installation application
