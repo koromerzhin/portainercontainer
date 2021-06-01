@@ -12,7 +12,7 @@ volumes:
 
 services:
   portainer:
-    image: portainer/portainer-ce:2.1.1
+    image: portainer/portainer-ce:2.5.1
     networks:
       - net
       - proxynetwork
