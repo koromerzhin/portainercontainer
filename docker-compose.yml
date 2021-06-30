@@ -22,7 +22,7 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.portainer.rule=Host(`portainer.traefik.me`)"
+        - "traefik.http.routers.portainer.rule=HostRegexp(`portainer.traefik.me`, `portainer.{ip:.*}.traefik.me`)"
         - "traefik.http.routers.portainer-tls.tls.domains[0].main=portainer.traefik.me"
         - "traefik.http.routers.portainer-tls.tls.domains[0].sans=portainer-*.traefik.me"
         - "traefik.http.services.www-portainer.loadbalancer.server.port=9000"
